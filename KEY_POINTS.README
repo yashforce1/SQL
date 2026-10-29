@@ -1,0 +1,60 @@
+# Remove `0` from an Integer Column in SQL
+
+If the column is an integer and you want to remove every `0` digit:
+
+```sql
+SELECT CAST(REPLACE(CAST(number_column AS CHAR), '0', '') AS UNSIGNED)
+FROM table_name;
+```
+
+## How it works
+
+Example:
+
+```text
+102030
+```
+
+### 1. Convert number to text
+
+```sql
+CAST(102030 AS CHAR)
+```
+
+Result:
+
+```text
+'102030'
+```
+
+### 2. Remove `0`
+
+```sql
+REPLACE('102030', '0', '')
+```
+
+Result:
+
+```text
+'123'
+```
+
+### 3. Convert back to integer
+
+```sql
+CAST('123' AS UNSIGNED)
+```
+
+Result:
+
+```text
+123
+```
+
+## Final Flow
+
+```text
+102030 → '102030' → '123' → 123
+```
+
+**Remember:** `REPLACE()` works with text, so we first convert the integer to `CHAR`.
